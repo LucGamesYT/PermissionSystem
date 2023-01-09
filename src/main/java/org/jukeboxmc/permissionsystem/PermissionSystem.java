@@ -97,10 +97,10 @@ public class PermissionSystem extends Plugin {
                     e.printStackTrace();
                 }
             } );
-            this.getLogger().info( "§aDie Verbindung zu MySQL wurde erfolgreich hergestellt." );
+            this.getLogger().info( "§aThe connection to MySQL was successfully created." );
         } catch ( SQLException e ) {
             e.printStackTrace();
-            this.getLogger().info( "§cEs konnte keine Verbindung zu MySQL hergestellt werden." );
+            this.getLogger().info( "§cNo connection to MySQL could be created." );
         }
     }
 

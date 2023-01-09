@@ -1,8 +1,10 @@
 package org.jukeboxmc.permissionsystem.command;
 
+import com.nukkitx.protocol.bedrock.data.command.CommandParamType;
 import org.jukeboxmc.JukeboxMC;
 import org.jukeboxmc.command.Command;
 import org.jukeboxmc.command.CommandData;
+import org.jukeboxmc.command.CommandParameter;
 import org.jukeboxmc.command.CommandSender;
 import org.jukeboxmc.command.annotation.Description;
 import org.jukeboxmc.command.annotation.Name;
@@ -13,6 +15,7 @@ import org.jukeboxmc.permissionsystem.service.PlayerGroupService;
 import org.jukeboxmc.permissionsystem.service.PlayerPermissionService;
 import org.jukeboxmc.player.Player;
 
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -32,7 +35,55 @@ public class PermissionCommand extends Command {
     public PermissionCommand( PermissionSystem plugin ) {
         super( CommandData.builder()
                 .setAliases( "perms" )
-                .build());
+                .setParameters( new CommandParameter[]{
+                                new CommandParameter( "group", List.of( "group" ), false ),
+                                new CommandParameter( "create", List.of( "create" ), false ),
+                                new CommandParameter( "name", CommandParamType.TEXT, false )
+                        },
+                        new CommandParameter[]{
+                                new CommandParameter( "group", List.of( "group" ), false ),
+                                new CommandParameter( "delete", List.of( "delete" ), false ),
+                                new CommandParameter( "name", CommandParamType.TEXT, false )
+                        },
+                        new CommandParameter[]{
+                                new CommandParameter( "group", List.of( "group" ), false ),
+                                new CommandParameter( "user", List.of( "user" ), false ),
+                                new CommandParameter( "add", List.of( "add" ), false ),
+                                new CommandParameter( "player", CommandParamType.TARGET, false ),
+                                new CommandParameter( "group", CommandParamType.STRING, false ),
+                        },
+                        new CommandParameter[]{
+                                new CommandParameter( "group", List.of( "group" ), false ),
+                                new CommandParameter( "user", List.of( "user" ), false ),
+                                new CommandParameter( "remove", List.of( "remove" ), false ),
+                                new CommandParameter( "player", CommandParamType.TARGET, false ),
+                                new CommandParameter( "group", CommandParamType.STRING, false ),
+                        },
+                        new CommandParameter[]{
+                                new CommandParameter( "group", List.of( "group" ), false ),
+                                new CommandParameter( "add", List.of( "add" ), false ),
+                                new CommandParameter( "group", CommandParamType.TEXT, false ),
+                                new CommandParameter( "permission", CommandParamType.TEXT, false ),
+                        },
+                        new CommandParameter[]{
+                                new CommandParameter( "group", List.of( "group" ), false ),
+                                new CommandParameter( "delete", List.of( "delete" ), false ),
+                                new CommandParameter( "group", CommandParamType.TEXT, false ),
+                                new CommandParameter( "permission", CommandParamType.TEXT, false ),
+                        },
+                        new CommandParameter[]{
+                                new CommandParameter( "permission", List.of( "permission" ), false ),
+                                new CommandParameter( "add", List.of( "add" ), false ),
+                                new CommandParameter( "player", CommandParamType.TARGET, false ),
+                                new CommandParameter( "permission", CommandParamType.TEXT, false ),
+                        },
+                        new CommandParameter[]{
+                                new CommandParameter( "permission", List.of( "permission" ), false ),
+                                new CommandParameter( "remove", List.of( "remove" ), false ),
+                                new CommandParameter( "player", CommandParamType.TARGET, false ),
+                                new CommandParameter( "permission", CommandParamType.TEXT, false ),
+                        }
+                ).build() );
         this.plugin = plugin;
         this.groupService = plugin.getGroupService();
         this.playerGroupService = plugin.getPlayerGroupService();
@@ -49,9 +100,9 @@ public class PermissionCommand extends Command {
                         JukeboxMC.getScheduler().execute( () -> {
                             if ( !exists ) {
                                 this.groupService.createGroup( groupName );
-                                commandSender.sendMessage( "§aDie Gruppe §e" + groupName + " §awurde erstellt." );
+                                commandSender.sendMessage( "§aThe group §e" + groupName + " §awas created." );
                             } else {
-                                commandSender.sendMessage( "§cDie Gruppe §e" + groupName + " exestiert bereits." );
+                                commandSender.sendMessage( "§cThe group §e" + groupName + " §calready exists." );
                             }
                         } );
                     } );
@@ -61,9 +112,9 @@ public class PermissionCommand extends Command {
                         JukeboxMC.getScheduler().execute( () -> {
                             if ( exists ) {
                                 this.groupService.deleteGroup( groupName );
-                                commandSender.sendMessage( "§aDie Gruppe §e" + groupName + " §awurde gelöscht." );
+                                commandSender.sendMessage( "§aThe group §e" + groupName + " §awas deleted." );
                             } else {
-                                commandSender.sendMessage( "§cDie Gruppe §e" + groupName + " exestiert nicht." );
+                                commandSender.sendMessage( "§cThe group §e" + groupName + " §cdoes not exist." );
                             }
                         } );
                     } );
@@ -79,9 +130,9 @@ public class PermissionCommand extends Command {
                         JukeboxMC.getScheduler().execute( () -> {
                             if ( exists ) {
                                 this.groupService.addPermissionToGroup( groupName, permission );
-                                commandSender.sendMessage( "§aDie Permission §e" + permission + " §awurde der Gruppe §e" + groupName + " §ahinzugefügt." );
+                                commandSender.sendMessage( "§aThe permission §e" + permission + " §ahas been added to the group §e" + groupName );
                             } else {
-                                commandSender.sendMessage( "§cDie Gruppe §e" + groupName + " exestiert nicht." );
+                                commandSender.sendMessage( "§cThe group §e" + groupName + " §cdoes not exist." );
                             }
                         } );
                     } );
@@ -93,9 +144,9 @@ public class PermissionCommand extends Command {
                         JukeboxMC.getScheduler().execute( () -> {
                             if ( exists ) {
                                 this.groupService.removePermissionFromGroup( groupName, permission );
-                                commandSender.sendMessage( "§aDie Permission §e" + permission + " §awurde der Gruppe §e" + groupName + " §aentfernt." );
+                                commandSender.sendMessage( "§aThe permission §e" + permission + " §awas removed from the group §e" + groupName );
                             } else {
-                                commandSender.sendMessage( "§cDie Gruppe §e" + groupName + " exestiert nicht." );
+                                commandSender.sendMessage( "§cThe group §e" + groupName + " §cdoes not exist." );
                             }
                         } );
                     } );
@@ -111,7 +162,7 @@ public class PermissionCommand extends Command {
                         if ( JukeboxMC.getPlayer( player ) != null ) {
                             uuid = JukeboxMC.getPlayer( player ).getUUID();
                         } else {
-                            commandSender.sendMessage( "§cEs konnte keine UUID vom Spieler §e" + player + " §cgefunden werden." );
+                            commandSender.sendMessage( "§cNo UUID could be found from the player §e" + player );
                             return;
                         }
                     }
@@ -119,9 +170,9 @@ public class PermissionCommand extends Command {
                         JukeboxMC.getScheduler().execute( () -> {
                             if ( !hasPermission ) {
                                 this.playerPermissionService.addPlayerPermission( uuid, permission );
-                                commandSender.sendMessage( "§aDie Permission §e" + permission + " §awurde dem Spieler §e" + player + " §ahinzugefügt." );
+                                commandSender.sendMessage( "§aThe permission §e" + permission + " §has been added to the player §e" + player );
                             } else {
-                                commandSender.sendMessage( "§cDer Spieler §e" + player + " §chat bereits die Permission §e" + permission + "§c." );
+                                commandSender.sendMessage( "§cThe player §e" + player + " §chas already the permission §e" + permission );
                             }
                         } );
                     } );
@@ -136,7 +187,7 @@ public class PermissionCommand extends Command {
                         if ( target != null ) {
                             uuid = target.getUUID();
                         } else {
-                            commandSender.sendMessage( "§cEs konnte keine UUID vom Spieler §e" + player + " §cgefunden werden." );
+                            commandSender.sendMessage( "§cNo UUID could be found from the player §e" + player );
                             return;
                         }
                     }
@@ -144,9 +195,9 @@ public class PermissionCommand extends Command {
                         JukeboxMC.getScheduler().execute( () -> {
                             if ( hasPermission ) {
                                 this.playerPermissionService.removePlayerPermission( uuid, permission );
-                                commandSender.sendMessage( "§aDie Permission §e" + permission + " §awurde dem Spieler §e" + player + " §ahinzugefügt." );
+                                commandSender.sendMessage( "§aThe permission §e" + permission + " §has been added to the player §e" + player );
                             } else {
-                                commandSender.sendMessage( "§cDer Spieler §e" + player + " §cbesitzt die Permission §e" + permission + "§cnicht." );
+                                commandSender.sendMessage( "§cThe player §e" + player + " §chas not the permission §e" + permission );
                             }
                         } );
                     } );
@@ -169,19 +220,19 @@ public class PermissionCommand extends Command {
                                     if ( target != null ) {
                                         uuid = target.getUUID();
                                     } else {
-                                        commandSender.sendMessage( "§cEs konnte keine UUID vom Spieler §e" + player + " §cgefunden werden." );
+                                        commandSender.sendMessage( "§cNo UUID could be found from the player §e" + player );
                                         return;
                                     }
                                 }
                                 boolean playerHasGroup = this.playerGroupService.playerHasGroup( uuid, groupName ).join();
                                 if ( !playerHasGroup ) {
                                     this.playerGroupService.addPlayerGroup( uuid, groupName );
-                                    commandSender.sendMessage( "§aDer Spieler §e" + player + " §awurde der Gruppe §e" + groupName + " §ahinzugefügt." );
+                                    commandSender.sendMessage( "§aThe player §e" + player + " §has been added to the group §e" + groupName );
                                 } else {
-                                    commandSender.sendMessage( "§cDer Spieler §e" + player + " §cist bereits in der Gruppe §e" + groupName + "§c." );
+                                    commandSender.sendMessage( "§cThe player §e" + player + " §cis already in the group §e" + groupName );
                                 }
                             } else {
-                                commandSender.sendMessage( "§cDie Gruppe §e" + groupName + " exestiert nicht." );
+                                commandSender.sendMessage( "§cThe group §e" + groupName + " §cdoes not exist." );
                             }
                         } );
                     } else if ( args[2].equalsIgnoreCase( "remove" ) ) {
@@ -198,19 +249,19 @@ public class PermissionCommand extends Command {
                                     if ( target != null ) {
                                         uuid = target.getUUID();
                                     } else {
-                                        commandSender.sendMessage( "§cEs konnte keine UUID vom Spieler §e" + player + " §cgefunden werden." );
+                                        commandSender.sendMessage( "§cNo UUID could be found from the player §e" + player );
                                         return;
                                     }
                                 }
                                 boolean playerHasGroup = this.playerGroupService.playerHasGroup( uuid, groupName ).join();
                                 if ( playerHasGroup ) {
                                     this.playerGroupService.removePlayerGroup( uuid, groupName );
-                                    commandSender.sendMessage( "§aDer Spieler §e" + player + " §awurde aus Gruppe §e" + groupName + " §aentfernt." );
+                                    commandSender.sendMessage( "§aThe player §e" + player + " §has been removed from group §e" + groupName );
                                 } else {
-                                    commandSender.sendMessage( "§cDer Spieler §e" + player + " §cist nicht in der Gruppe §e" + groupName + "§c." );
+                                    commandSender.sendMessage( "§cThe player §e" + player + " §cis not in the group §e" + groupName );
                                 }
                             } else {
-                                commandSender.sendMessage( "§cDie Gruppe §e" + groupName + " exestiert nicht." );
+                                commandSender.sendMessage( "§cThe group §e" + groupName + " §calready exists." );
                             }
                         } );
                     }
