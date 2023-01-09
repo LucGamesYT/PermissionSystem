@@ -3,7 +3,7 @@ package org.jukeboxmc.permissionsystem;
 import lombok.Getter;
 import org.jukeboxmc.JukeboxMC;
 import org.jukeboxmc.command.CommandManager;
-import org.jukeboxmc.permissionsystem.command.MyPermsCommand;
+import org.jukeboxmc.permissionsystem.command.PermissionCommand;
 import org.jukeboxmc.permissionsystem.config.MySqlConfig;
 import org.jukeboxmc.permissionsystem.listener.PlayerJoinListener;
 import org.jukeboxmc.permissionsystem.listener.PlayerQuitListener;
@@ -52,7 +52,7 @@ public class PermissionSystem extends Plugin {
         pluginManager.registerListener( new PlayerQuitListener( this ) );
 
         CommandManager commandManager = pluginManager.getCommandManager();
-        commandManager.registerCommand( new MyPermsCommand( this ) );
+        commandManager.registerCommand( new PermissionCommand( this ) );
     }
 
     private void initMySQL() {

@@ -22,14 +22,14 @@ import java.util.UUID;
 @Name ( "permissionsystem" )
 @Description ( "This is a command to handle permissions and groups." )
 @Permission ( "permissionsystem.command.execute" )
-public class MyPermsCommand extends Command {
+public class PermissionCommand extends Command {
 
     private final PermissionSystem plugin;
     private final GroupService groupService;
     private final PlayerGroupService playerGroupService;
     private final PlayerPermissionService playerPermissionService;
 
-    public MyPermsCommand( PermissionSystem plugin ) {
+    public PermissionCommand( PermissionSystem plugin ) {
         super( CommandData.builder()
                 .setAliases( "perms" )
                 .build());
@@ -38,18 +38,6 @@ public class MyPermsCommand extends Command {
         this.playerGroupService = plugin.getPlayerGroupService();
         this.playerPermissionService = plugin.getPlayerPermissionService();
     }
-
-    /*
-    /perms group create <name>
-    /perms group delete <name>
-    /perms group user add <uuid|name> <group>
-    /perms group user remove <uuid|name> <group>
-    /perms group add <group> <permission>
-    /perms group delete <group> <permission>
-
-    /perms permission add <uuid|name> <permission>
-    /perms permission remove <uuid|name> <permission>
-     */
 
     @Override
     public void execute( CommandSender commandSender, String s, String[] args ) {
