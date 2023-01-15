@@ -15,11 +15,18 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+    <repositories>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
+    </repositories>
+
     <dependencies>
         <dependency>
-            <groupId>org.jukeboxmc</groupId>
+            <groupId>com.github.LucGamesYT</groupId>
             <artifactId>JukeboxMC</artifactId>
-            <version>1.0.0-Beta-1</version>
+            <version>1.0.47</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
