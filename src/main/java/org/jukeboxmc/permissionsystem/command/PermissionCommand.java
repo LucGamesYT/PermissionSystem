@@ -1,6 +1,6 @@
 package org.jukeboxmc.permissionsystem.command;
 
-import com.nukkitx.protocol.bedrock.data.command.CommandParamType;
+import org.cloudburstmc.protocol.bedrock.data.command.CommandParamType;
 import org.jukeboxmc.JukeboxMC;
 import org.jukeboxmc.command.Command;
 import org.jukeboxmc.command.CommandData;
